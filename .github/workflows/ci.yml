@@ -67,12 +67,12 @@ jobs:
       run: flutter pub deps
 
   publish:
-    name: Publish to GitHub Packages
+    name: Create GitHub Release
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     permissions:
-      contents: read
+      contents: write
       packages: write
     
     steps:
@@ -91,20 +91,42 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
       
-    - name: Build package
+    - name: Get package version
+      id: version
       run: |
-        echo "Building package for GitHub Packages..."
-        dart pub get
-        echo "✅ Package built successfully"
+        VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Package version: $VERSION"
         
     - name: Create package archive
       run: |
         echo "Creating package archive..."
-        tar -czf package.tar.gz lib/ pubspec.yaml README.md CHANGELOG.md LICENSE
-        echo "✅ Package archive created"
+        tar -czf helloworld-${{ steps.version.outputs.version }}.tar.gz lib/ pubspec.yaml README.md CHANGELOG.md LICENSE example/
+        echo "✅ Package archive created: helloworld-${{ steps.version.outputs.version }}.tar.gz"
         
-    - name: Upload to GitHub Packages
-      run: |
-        echo "Package ready for GitHub Packages"
-        echo "Note: Dart packages in GitHub Packages require additional setup"
-        echo "Consider using GitHub Releases for distribution instead"
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        name: Release v${{ steps.version.outputs.version }}
+        body: |
+          ## Flutter Package Release v${{ steps.version.outputs.version }}
+          
+          ### Installation
+          Add this to your `pubspec.yaml`:
+          ```yaml
+          dependencies:
+            helloworld:
+              git:
+                url: https://github.com/${{ github.repository }}
+                ref: v${{ steps.version.outputs.version }}
+          ```
+          
+          ### Changes
+          See [CHANGELOG.md](CHANGELOG.md) for details.
+        files: |
+          helloworld-${{ steps.version.outputs.version }}.tar.gz
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

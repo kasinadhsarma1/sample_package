@@ -73,7 +73,6 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     permissions:
       contents: write
-      packages: write
     
     steps:
     - name: Checkout code
@@ -128,5 +127,3 @@ jobs:
           helloworld-${{ steps.version.outputs.version }}.tar.gz
         draft: false
         prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

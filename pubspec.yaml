@@ -5,9 +5,6 @@ homepage: https://github.com/kasinadhsarma1/helloworld
 repository: https://github.com/kasinadhsarma1/helloworld
 issue_tracker: https://github.com/kasinadhsarma1/helloworld/issues
 
-# Remove this line if you wish to publish to pub.dev
-publish_to: 'none'
-
 environment:
   sdk: '>=3.5.0 <4.0.0'
   flutter: '>=3.24.0'

@@ -76,6 +76,16 @@ dart format .
 5. Ensure all tests pass
 6. Create a Pull Request
 
+## Publishing
+
+This package includes automated publishing to pub.dev via GitHub Actions. See [PUBLISHING.md](PUBLISHING.md) for setup instructions.
+
+### Manual Publishing
+```bash
+dart pub publish --dry-run  # Test publishing
+dart pub publish            # Publish to pub.dev
+```
+
 ## License
 
 MIT License - see LICENSE file for details.

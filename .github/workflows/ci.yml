@@ -32,16 +32,36 @@ jobs:
       run: flutter pub get
       
     - name: Verify formatting
-      run: dart format --output=none --set-exit-if-changed .
+      run: |
+        echo "Checking code formatting..."
+        if ! dart format --output=none --set-exit-if-changed .; then
+          echo "❌ Code formatting issues found!"
+          echo ""
+          echo "The following files need formatting:"
+          dart format --output=none --show-all .
+          echo ""
+          echo "💡 Fix by running: dart format ."
+          exit 1
+        fi
+        echo "✅ All files are properly formatted"
       
     - name: Analyze project source
-      run: flutter analyze --fatal-infos
+      run: |
+        echo "Running static analysis..."
+        flutter analyze --fatal-infos
+        echo "✅ Static analysis passed"
       
     - name: Run tests
-      run: flutter test
+      run: |
+        echo "Running widget tests..."
+        flutter test
+        echo "✅ All tests passed"
       
     - name: Check pub.dev compatibility
-      run: dart pub publish --dry-run
+      run: |
+        echo "Checking pub.dev compatibility..."
+        dart pub publish --dry-run
+        echo "✅ Package is ready for pub.dev"
       
     - name: Check pub deps
       run: flutter pub deps

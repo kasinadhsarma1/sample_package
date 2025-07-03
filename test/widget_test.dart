@@ -11,13 +11,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:helloworld/helloworld.dart';
 
 void main() {
-  testWidgets('Hello World app displays correctly', (WidgetTester tester) async {
+  testWidgets('Hello World app displays correctly',
+      (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const HelloWorldApp());
 
     // Verify that our Hello World text is present.
     expect(find.text('Hello World!'), findsOneWidget);
-    expect(find.text('Welcome to the Flutter Hello World Package'), findsOneWidget);
+    expect(find.text('Welcome to the Flutter Hello World Package'),
+        findsOneWidget);
     expect(find.text('Hello World Package'), findsOneWidget);
 
     // Verify that the Flutter Dash icon is present.

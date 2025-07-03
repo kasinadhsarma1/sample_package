@@ -1,0 +1,33 @@
+name: helloworld
+description: A simple Hello World Flutter package demonstrating cross-platform compatibility for iOS and Android with modern Material Design UI.
+version: 1.0.0
+homepage: https://github.com/kasinadhsarma1/helloworld
+repository: https://github.com/kasinadhsarma1/helloworld
+issue_tracker: https://github.com/kasinadhsarma1/helloworld/issues
+
+# Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.8.1 <4.0.0'
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+topics:
+  - flutter
+  - hello-world
+  - cross-platform
+  - material-design
+  - ios
+  - android
